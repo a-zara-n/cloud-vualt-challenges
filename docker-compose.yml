@@ -1,0 +1,25 @@
+services:
+  localstack:
+    container_name: cloud-vault-localstack
+    image: ${LOCALSTACK_IMAGE:-localstack/localstack:4.14.0}
+    ports:
+      - "127.0.0.1:4566:4566"            # LocalStack Gateway
+      - "127.0.0.1:4510-4559:4510-4559"  # External service ports
+    environment:
+      - LOCALSTACK_API_KEY=${LOCALSTACK_API_KEY:-}
+      - DEBUG=${DEBUG:-0}
+      - PERSISTENCE=1
+      - SERVICES=dynamodb,s3,lambda,apigateway,apigatewayv2,iam,cognito-idp,secretsmanager,ssm,ecr,ec2,sts,cloudformation,cloudwatch,logs,cloudtrail
+      - DEFAULT_REGION=ap-northeast-1
+      - LAMBDA_EXECUTOR=docker
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - DNS_NAME_PATTERNS_TO_RESOLVE_UPSTREAM=bedrock-runtime\.[^.]+\.amazonaws\.com
+    volumes:
+      - "${LOCALSTACK_VOLUME_DIR:-./.localstack}:/var/lib/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4566/_localstack/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s

@@ -1,0 +1,23 @@
+{
+  "availability-zones:account=583299526590:region=ap-northeast-1": [
+    "ap-northeast-1a",
+    "ap-northeast-1c",
+    "ap-northeast-1d"
+  ],
+  "hosted-zone:account=583299526590:domainName=cloudfortress.security.jaws-ug.jp:region=ap-northeast-1": {
+    "Id": "/hostedzone/Z0139909368QSBUYGLEEO",
+    "Name": "cloudfortress.security.jaws-ug.jp."
+  },
+  "availability-zones:account=583299526590:region=us-east-1": [
+    "us-east-1a",
+    "us-east-1b",
+    "us-east-1c",
+    "us-east-1d",
+    "us-east-1e",
+    "us-east-1f"
+  ],
+  "hosted-zone:account=583299526590:domainName=cloudfortress.security.jaws-ug.jp:region=us-east-1": {
+    "Id": "/hostedzone/Z0139909368QSBUYGLEEO",
+    "Name": "cloudfortress.security.jaws-ug.jp."
+  }
+}

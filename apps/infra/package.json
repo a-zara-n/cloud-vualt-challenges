@@ -1,0 +1,28 @@
+{
+  "name": "cloud-vault-infra",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "sync:challenges": "bun run ../../scripts/sync-challenge-catalog.ts",
+    "synth": "bun run sync:challenges && cdk synth",
+    "deploy": "cdk deploy",
+    "deploy:dev": "bun run sync:challenges && cdk deploy ctf-vpc-dev ctf-iam-dev ctf-s3-dev ctf-ec2-dev ctf-cognito-dev ctf-portal-frontend-dev ctf-challenge-server-dev ctf-lambda-dev ctf-secrets-dev ctf-ecr-dev ctf-trail-dev ctf-bedrock-dev --context stage=dev --require-approval never",
+    "deploy:prod": "bun run sync:challenges && cdk deploy ctf-vpc-prod ctf-iam-prod ctf-s3-prod ctf-ec2-prod ctf-cognito-prod ctf-portal-frontend-prod ctf-challenge-server-prod ctf-lambda-prod ctf-secrets-prod ctf-ecr-prod ctf-trail-prod ctf-bedrock-prod --context stage=prod",
+    "bootstrap:local": "bun run scripts/cdklocal.ts bootstrap",
+    "deploy:local:challenge": "bun run sync:challenges && bun run scripts/cdklocal.ts deploy ctf-challenge-server-local --context stage=local --context challengeOnly=true --require-approval never",
+    "deploy:local": "bun run scripts/cdklocal.ts deploy 'ctf-*-local' --require-approval never",
+    "destroy:local": "bun run scripts/cdklocal.ts destroy 'ctf-*-local' --force",
+    "diff": "cdk diff",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "2.270.0",
+    "constructs": "^10.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.3.5",
+    "aws-cdk": "2.1143.0",
+    "typescript": "^5.7.2"
+  }
+}

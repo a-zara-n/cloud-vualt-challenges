@@ -1,0 +1,13 @@
+date,amount_jpy,destination_account,destination_bank,authorized_by,memo
+2026-02-02,35000000,CH-8820-XXXXXX,Swiss National Bank,yamada_kenichi,Q1 consulting fee
+2026-04-01,42000000,SG-0123-XXXXXX,DBS Bank Singapore,yamada_kenichi,APAC expansion fund
+2026-05-20,38000000,CH-8820-XXXXXX,Swiss National Bank,yamada_kenichi,Strategic partnership
+2026-06-10,55000000,KY-9999-XXXXXX,Cayman National Bank,yamada_kenichi,Investment reserve
+2026-07-01,28000000,SG-0123-XXXXXX,DBS Bank Singapore,yamada_kenichi,Technology licensing
+2026-07-15,45000000,CH-8820-XXXXXX,Swiss National Bank,yamada_kenichi,Q2 consulting fee
+2026-08-05,32000000,KY-9999-XXXXXX,Cayman National Bank,yamada_kenichi,Market research
+2026-08-20,41000000,SG-0123-XXXXXX,DBS Bank Singapore,yamada_kenichi,Vendor payment
+2026-09-01,50000000,CH-8820-XXXXXX,Swiss National Bank,yamada_kenichi,Q3 consulting fee
+2026-09-15,29000000,KY-9999-XXXXXX,Cayman National Bank,yamada_kenichi,Contingency fund
+2026-09-30,33000000,SG-0123-XXXXXX,DBS Bank Singapore,yamada_kenichi,Infrastructure upgrade
+2026-10-01,22000000,CH-8820-XXXXXX,Swiss National Bank,yamada_kenichi,Advisory fee

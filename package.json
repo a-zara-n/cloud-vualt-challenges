@@ -1,0 +1,47 @@
+{
+  "name": "cloud-vault",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "scenario/*"
+  ],
+  "scripts": {
+    "dev": "bun run --cwd apps/portal dev",
+    "dev:challenge": "bun run scripts/dev-challenge-server.ts",
+    "dev:localstack": "bun run scripts/dev-localstack.ts",
+    "dev:localstack:full": "bun run scripts/dev-localstack.ts --full",
+    "dev:localstack:bedrock": "bun run scripts/dev-localstack.ts --with-aws-bedrock",
+    "chat:bedrock-proxy": "bun run scripts/bedrock-chat-proxy.ts",
+    "setup": "bun run scripts/setup.ts",
+    "seed:assets": "bun run scripts/seed-assets.ts",
+    "scenario": "bun run scripts/scenario.ts",
+    "scenario:dev": "bun run scripts/scenario-dev.ts",
+    "bedrock:invoke-agent": "cd scenario/solver && bun run invoke-agent",
+    "typecheck": "bun run --cwd apps/portal typecheck && bun run --cwd apps/infra typecheck && bun run --cwd scenario/solver typecheck",
+    "build": "bun run --cwd apps/portal build",
+    "cdk:synth": "bun run --cwd apps/infra synth",
+    "cdk:diff": "bun run --cwd apps/infra diff",
+    "cdk:deploy": "bun run --cwd apps/infra deploy",
+    "cdk:deploy:dev": "bun run --cwd apps/infra deploy:dev",
+    "cdk:deploy:prod": "bun run --cwd apps/infra deploy:prod",
+    "cdk:deploy:dev:with-secrets": "bun run secrets:deploy:dev && bun run cdk:deploy:dev",
+    "cdk:deploy:prod:with-secrets": "bun run secrets:deploy:prod && bun run cdk:deploy:prod",
+    "cdk:bootstrap:local": "bun run --cwd apps/infra bootstrap:local",
+    "cdk:deploy:local:challenge": "bun run --cwd apps/infra deploy:local:challenge",
+    "cdk:deploy:local": "bun run --cwd apps/infra deploy:local",
+    "cdk:destroy:local": "bun run --cwd apps/infra destroy:local",
+    "secrets:deploy:dev": "bun run scripts/seed-secrets.ts --stage dev",
+    "secrets:deploy:prod": "bun run scripts/seed-secrets.ts --stage prod",
+    "ecr:push:dev": "bun run scripts/push-ecr-assets.ts --stage dev",
+    "ecr:push:prod": "bun run scripts/push-ecr-assets.ts --stage prod",
+    "localstack:up": "./scripts/localstack.sh up",
+    "localstack:down": "./scripts/localstack.sh down",
+    "localstack:logs": "./scripts/localstack.sh logs",
+    "localstack:status": "./scripts/localstack.sh status"
+  },
+  "dependencies": {
+    "@aws-sdk/client-bedrock-runtime": "^3.700.0",
+    "@aws-sdk/client-ssm": "^3.700.0"
+  }
+}

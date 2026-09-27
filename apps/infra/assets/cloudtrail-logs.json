@@ -1,0 +1,271 @@
+{
+  "Records": [
+    {
+      "eventVersion": "1.08",
+      "userIdentity": {
+        "type": "IAMUser",
+        "principalId": "AIDAIOSFODNN7EXAMPLE",
+        "arn": "arn:aws:iam::123456789012:user/svc-portal-dev",
+        "accountId": "123456789012",
+        "userName": "svc-portal-dev"
+      },
+      "eventTime": "2026-09-28T08:15:00Z",
+      "eventSource": "s3.amazonaws.com",
+      "eventName": "ListBuckets",
+      "awsRegion": "ap-northeast-1",
+      "sourceIPAddress": "203.0.113.50",
+      "userAgent": "aws-cli/2.15.0",
+      "requestParameters": null,
+      "responseElements": null,
+      "eventID": "evt-001-listbuckets"
+    },
+    {
+      "eventVersion": "1.08",
+      "userIdentity": {
+        "type": "IAMUser",
+        "principalId": "AIDAIOSFODNN7EXAMPLE",
+        "arn": "arn:aws:iam::123456789012:user/svc-portal-dev",
+        "accountId": "123456789012",
+        "userName": "svc-portal-dev"
+      },
+      "eventTime": "2026-09-28T08:16:30Z",
+      "eventSource": "s3.amazonaws.com",
+      "eventName": "GetObject",
+      "awsRegion": "ap-northeast-1",
+      "sourceIPAddress": "203.0.113.50",
+      "userAgent": "aws-cli/2.15.0",
+      "requestParameters": {
+        "bucketName": "techvault-internal-2026",
+        "key": ".hidden/flag.txt"
+      },
+      "responseElements": null,
+      "eventID": "evt-002-getobject"
+    },
+    {
+      "eventVersion": "1.08",
+      "userIdentity": {
+        "type": "AssumedRole",
+        "principalId": "AROAIOSFODNN7EXAMPLE:svc-portal-dev-session",
+        "arn": "arn:aws:sts::123456789012:assumed-role/DataAnalystRole/svc-portal-dev-session",
+        "accountId": "123456789012",
+        "sessionContext": {
+          "sessionIssuer": {
+            "type": "Role",
+            "principalId": "AROAIOSFODNN7EXAMPLE",
+            "arn": "arn:aws:iam::123456789012:role/DataAnalystRole",
+            "accountId": "123456789012",
+            "userName": "DataAnalystRole"
+          }
+        }
+      },
+      "eventTime": "2026-09-28T08:20:00Z",
+      "eventSource": "sts.amazonaws.com",
+      "eventName": "AssumeRole",
+      "awsRegion": "ap-northeast-1",
+      "sourceIPAddress": "203.0.113.50",
+      "userAgent": "aws-cli/2.15.0",
+      "requestParameters": {
+        "roleArn": "arn:aws:iam::123456789012:role/DataAnalystRole",
+        "roleSessionName": "svc-portal-dev-session"
+      },
+      "responseElements": {
+        "credentials": {
+          "accessKeyId": "ASIAIOSFODNN7EXAMPLE",
+          "expiration": "2026-09-28T09:20:00Z",
+          "sessionToken": "FwoGZXIvYXdzEBYaDKXm..."
+        }
+      },
+      "eventID": "evt-003-assumerole"
+    },
+    {
+      "eventVersion": "1.08",
+      "userIdentity": {
+        "type": "AssumedRole",
+        "principalId": "AROAIOSFODNN7EXAMPLE:svc-portal-dev-session",
+        "arn": "arn:aws:sts::123456789012:assumed-role/DataAnalystRole/svc-portal-dev-session",
+        "accountId": "123456789012"
+      },
+      "eventTime": "2026-09-28T08:22:15Z",
+      "eventSource": "secretsmanager.amazonaws.com",
+      "eventName": "GetSecretValue",
+      "awsRegion": "ap-northeast-1",
+      "sourceIPAddress": "203.0.113.50",
+      "userAgent": "aws-cli/2.15.0",
+      "requestParameters": {
+        "secretId": "tvault/evidence/password"
+      },
+      "responseElements": null,
+      "eventID": "evt-004-getsecret"
+    },
+    {
+      "eventVersion": "1.08",
+      "userIdentity": {
+        "type": "AssumedRole",
+        "principalId": "AROAIOSFODNN7EXAMPLE:svc-portal-dev-session",
+        "arn": "arn:aws:sts::123456789012:assumed-role/DataAnalystRole/svc-portal-dev-session",
+        "accountId": "123456789012"
+      },
+      "eventTime": "2026-09-28T08:25:00Z",
+      "eventSource": "lambda.amazonaws.com",
+      "eventName": "GetFunctionConfiguration",
+      "awsRegion": "ap-northeast-1",
+      "sourceIPAddress": "203.0.113.50",
+      "userAgent": "aws-cli/2.15.0",
+      "requestParameters": {
+        "functionName": "techvault-data-processor"
+      },
+      "responseElements": null,
+      "eventID": "evt-005-getlambdaconfig"
+    },
+    {
+      "eventVersion": "1.08",
+      "userIdentity": {
+        "type": "IAMUser",
+        "principalId": "AIDACTOKAWAKAMI",
+        "arn": "arn:aws:iam::123456789012:user/cto-kawakami",
+        "accountId": "123456789012",
+        "userName": "cto-kawakami"
+      },
+      "eventTime": "2026-09-29T02:30:00Z",
+      "eventSource": "s3.amazonaws.com",
+      "eventName": "CreateBucket",
+      "awsRegion": "ap-northeast-1",
+      "sourceIPAddress": "198.51.100.25",
+      "userAgent": "aws-cli/2.15.0",
+      "requestParameters": {
+        "bucketName": "tvault-cto-private-7a3f9c"
+      },
+      "responseElements": null,
+      "eventID": "evt-006-createbucket"
+    },
+    {
+      "eventVersion": "1.08",
+      "userIdentity": {
+        "type": "IAMUser",
+        "principalId": "AIDACTOKAWAKAMI",
+        "arn": "arn:aws:iam::123456789012:user/cto-kawakami",
+        "accountId": "123456789012",
+        "userName": "cto-kawakami"
+      },
+      "eventTime": "2026-09-29T02:35:00Z",
+      "eventSource": "secretsmanager.amazonaws.com",
+      "eventName": "GetSecretValue",
+      "awsRegion": "ap-northeast-1",
+      "sourceIPAddress": "198.51.100.25",
+      "userAgent": "aws-cli/2.15.0",
+      "requestParameters": {
+        "secretId": "tvault/cto/backup-key"
+      },
+      "responseElements": null,
+      "eventID": "evt-007-ctogetsecret"
+    },
+    {
+      "eventVersion": "1.08",
+      "userIdentity": {
+        "type": "IAMUser",
+        "principalId": "AIDACTOKAWAKAMI",
+        "arn": "arn:aws:iam::123456789012:user/cto-kawakami",
+        "accountId": "123456789012",
+        "userName": "cto-kawakami"
+      },
+      "eventTime": "2026-09-29T02:40:00Z",
+      "eventSource": "s3.amazonaws.com",
+      "eventName": "PutObject",
+      "awsRegion": "ap-northeast-1",
+      "sourceIPAddress": "198.51.100.25",
+      "userAgent": "aws-cli/2.15.0",
+      "requestParameters": {
+        "bucketName": "tvault-cto-private-7a3f9c",
+        "key": "cto-evidence/wire_transfer_records.csv"
+      },
+      "responseElements": null,
+      "eventID": "evt-008-ctoputobject1"
+    },
+    {
+      "eventVersion": "1.08",
+      "userIdentity": {
+        "type": "IAMUser",
+        "principalId": "AIDACTOKAWAKAMI",
+        "arn": "arn:aws:iam::123456789012:user/cto-kawakami",
+        "accountId": "123456789012",
+        "userName": "cto-kawakami"
+      },
+      "eventTime": "2026-09-29T02:41:00Z",
+      "eventSource": "s3.amazonaws.com",
+      "eventName": "PutObject",
+      "awsRegion": "ap-northeast-1",
+      "sourceIPAddress": "198.51.100.25",
+      "userAgent": "aws-cli/2.15.0",
+      "requestParameters": {
+        "bucketName": "tvault-cto-private-7a3f9c",
+        "key": "cto-evidence/offshore_account.txt"
+      },
+      "responseElements": null,
+      "eventID": "evt-009-ctoputobject2"
+    },
+    {
+      "eventVersion": "1.08",
+      "userIdentity": {
+        "type": "IAMUser",
+        "principalId": "AIDACTOKAWAKAMI",
+        "arn": "arn:aws:iam::123456789012:user/cto-kawakami",
+        "accountId": "123456789012",
+        "userName": "cto-kawakami"
+      },
+      "eventTime": "2026-09-29T02:42:00Z",
+      "eventSource": "s3.amazonaws.com",
+      "eventName": "PutObject",
+      "awsRegion": "ap-northeast-1",
+      "sourceIPAddress": "198.51.100.25",
+      "userAgent": "aws-cli/2.15.0",
+      "requestParameters": {
+        "bucketName": "tvault-cto-private-7a3f9c",
+        "key": "cto-evidence/final_complicity.txt"
+      },
+      "responseElements": null,
+      "eventID": "evt-010-ctoputobject3"
+    },
+    {
+      "eventVersion": "1.08",
+      "userIdentity": {
+        "type": "AssumedRole",
+        "principalId": "AROAIOSFODNN7EXAMPLE:svc-portal-dev-session",
+        "arn": "arn:aws:sts::123456789012:assumed-role/DataAnalystRole/svc-portal-dev-session",
+        "accountId": "123456789012"
+      },
+      "eventTime": "2026-09-30T10:00:00Z",
+      "eventSource": "ecr.amazonaws.com",
+      "eventName": "BatchGetImage",
+      "awsRegion": "ap-northeast-1",
+      "sourceIPAddress": "203.0.113.50",
+      "userAgent": "aws-cli/2.15.0",
+      "requestParameters": {
+        "repositoryName": "techvault/data-processor",
+        "imageIds": [{"imageTag": "latest"}]
+      },
+      "responseElements": null,
+      "eventID": "evt-011-batchgetimage"
+    },
+    {
+      "eventVersion": "1.08",
+      "userIdentity": {
+        "type": "AssumedRole",
+        "principalId": "AROAIOSFODNN7EXAMPLE:svc-portal-dev-session",
+        "arn": "arn:aws:sts::123456789012:assumed-role/DataAnalystRole/svc-portal-dev-session",
+        "accountId": "123456789012"
+      },
+      "eventTime": "2026-09-30T10:05:00Z",
+      "eventSource": "ssm.amazonaws.com",
+      "eventName": "GetParameter",
+      "awsRegion": "ap-northeast-1",
+      "sourceIPAddress": "203.0.113.50",
+      "userAgent": "aws-cli/2.15.0",
+      "requestParameters": {
+        "name": "/techvault/internal/api-key",
+        "withDecryption": true
+      },
+      "responseElements": null,
+      "eventID": "evt-012-getparameter"
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build outputs
+.next/
+out/
+dist/
+build/
+next-env.d.ts
+
+# Environment files
+.env
+.env.*
+!.env.example
+# CTF用リポジトリ素材の.envは追跡対象
+!season/Cloud-Vault/repos/**/.env
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage
+.nyc_output/
+coverage/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# AWS credentials
+.aws/
+
+# Docker volumes
+.localstack/
+scenario/.localstack/
+
+# TypeScript
+*.tsbuildinfo
+
+# CDK
+cdk.out/
+apps/infra/cdk.out.localstack/
+apps/infra/cdk.out.aws-bedrock/
+
+# Playwright
+playwright-report/
+test-results/
+
+# Generated infra assets
+apps/infra/.generated/
+
+# Generated Git repositories (CTF assets)
+season/Cloud-Vault/repos/generated/
+
+# CTFd exports
+challenges/*.zip
+!challenges/final/encrypted_evidence.zip
+
+tmp

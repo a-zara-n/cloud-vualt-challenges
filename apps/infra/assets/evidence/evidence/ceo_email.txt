@@ -1,0 +1,6 @@
+From: yamada.kenichi@techvault.example
+To: kawakami.seiji@techvault.example
+Subject: Re: Q4 adjustments
+
+Keep the offshore transfer records out of the normal reporting bucket.
+If anyone asks, the customer revenue adjustments were approved during the board review.

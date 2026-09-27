@@ -1,0 +1,14 @@
+.git
+.localstack
+.localstack.bak-*
+.serena
+node_modules
+**/node_modules
+**/.next
+**/cdk.out
+**/cdk.out.localstack
+**/cdk.out.aws-bedrock
+**/dist
+**/playwright-report
+**/test-results
+**/tsconfig.tsbuildinfo

@@ -1,0 +1,23 @@
+Offshore Account Information
+============================
+
+Account 1 (Switzerland):
+  Bank: Swiss National Bank
+  Account: CH-8820-XXXXXX
+  Holder: Yamada Holdings GmbH
+  Balance (as of 2026-10-01): CHF 2,850,000
+
+Account 2 (Singapore):
+  Bank: DBS Bank Singapore
+  Account: SG-0123-XXXXXX
+  Holder: TechVault Asia Pte Ltd (shell company)
+  Balance (as of 2026-10-01): SGD 1,420,000
+
+Account 3 (Cayman Islands):
+  Bank: Cayman National Bank
+  Account: KY-9999-XXXXXX
+  Holder: CloudVault Capital LLC
+  Balance (as of 2026-10-01): USD 980,000
+
+Authorization: CEO Yamada Kenichi (personal seal)
+CTO Kawakami acknowledgment: Signed 2026-03-10

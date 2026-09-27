@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #1a73e8;
+  --color-primary-hover: #1557b0;
+  --color-primary-light: #e8f0fe;
+  --color-text-primary: #202124;
+  --color-text-secondary: #5f6368;
+  --color-background: #ffffff;
+  --color-surface: #f8f9fa;
+  --color-border: #dadce0;
+  --color-success: #34a853;
+  --color-error: #ea4335;
+  --color-warning: #fbbc04;
+}
+
+@layer base {
+  body {
+    @apply bg-white text-text-primary antialiased;
+    font-family: var(--font-inter), system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-semibold text-text-primary;
+  }
+
+  a {
+    @apply text-primary hover:text-primary-hover transition-colors;
+  }
+
+  input,
+  textarea,
+  select {
+    @apply font-sans;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-white rounded-card shadow-card;
+  }
+
+  .card-hover {
+    @apply bg-white rounded-card shadow-card transition-shadow hover:shadow-card-hover;
+  }
+
+  .btn-primary {
+    @apply bg-primary text-white rounded-button px-4 py-2 font-medium
+      hover:bg-primary-hover active:bg-primary-hover
+      disabled:opacity-50 disabled:cursor-not-allowed
+      transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
+  }
+
+  .btn-secondary {
+    @apply bg-white text-primary border border-border rounded-button px-4 py-2 font-medium
+      hover:bg-surface active:bg-surface
+      disabled:opacity-50 disabled:cursor-not-allowed
+      transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
+  }
+
+  .input-field {
+    @apply w-full border border-border rounded-button px-3 py-2.5 text-sm text-text-primary
+      placeholder:text-text-secondary
+      focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary
+      transition-colors;
+  }
+
+  .label {
+    @apply block text-sm font-medium text-text-primary mb-1.5;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}

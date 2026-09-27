@@ -1,0 +1,11 @@
+[install]
+# キャッシュを共有してインストールを高速化
+cache = true
+
+[install.lockfile]
+# ロックファイルを生成
+save = true
+
+[run]
+# Bunスクリプトのデフォルト設定
+bun = true

@@ -1,0 +1,35 @@
+======================================
+EVIDENCE OF CTO COMPLICITY
+======================================
+
+Date: 2026-10-02
+Subject: CTO Kawakami's involvement in financial fraud
+
+CTO Kawakami Seiji has been an active participant in CEO Yamada's
+embezzlement scheme since March 2026. Evidence includes:
+
+1. Created private S3 bucket (tvault-cto-private-7a3f9c) to store
+   wire transfer records outside normal audit scope.
+
+2. Deliberately weakened IAM policies to allow lateral movement
+   across the AWS environment.
+
+3. Maintained IMDSv1 on EC2 instances despite security team's
+   recommendation to upgrade, enabling potential SSRF attacks
+   that could be blamed on external threat actors.
+
+4. Stored backup encryption key in Secrets Manager (tvault/cto/backup-key)
+   as a dead man's switch - if exposed, CTO planned to claim
+   the CEO acted alone.
+
+5. CloudTrail logs (techvault-cloudtrail-logs) contain timestamped
+   evidence of CTO's unauthorized operations.
+
+TVAULT{all_roads_lead_to_cloudtrail}
+
+This document was prepared by the internal whistleblower.
+All evidence has been preserved and cannot be tampered with.
+
+======================================
+END OF EVIDENCE
+======================================
