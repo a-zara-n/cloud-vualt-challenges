@@ -90,7 +90,7 @@ function config() {
   return {
     stage: process.env.CTF_STAGE ?? 'local',
     title: process.env.CTF_CHALLENGE_TITLE ?? 'Cloud Vault — TechVault侵害調査',
-    description: process.env.CTF_CHALLENGE_DESCRIPTION ?? '社員ポータルを起点に漏洩経路を追い、LocalStack上の最終証拠を回収してください。',
+    description: process.env.CTF_CHALLENGE_DESCRIPTION ?? '社員ポータルを起点に漏洩経路を追い、Floci上の最終証拠を回収してください。',
     targetUrl,
   }
 }
@@ -203,7 +203,7 @@ function dashboardPageHtml() {
 <header><div class="brand">CLOUD VAULT CTF</div><a class="target" id="header-target" target="_blank" rel="noreferrer">問題環境を開く ↗</a></header>
 <section class="hero"><div><div class="eyebrow">CHALLENGE DASHBOARD</div><h1>${escapeHtml(dashboard.title)}</h1><p>${escapeHtml(dashboard.description)}</p></div><div class="stats"><div class="stat"><strong id="solved-count">0</strong><span>SOLVED</span></div><div class="stat"><strong id="challenge-count">0</strong><span>CHALLENGES</span></div><div class="stat"><strong id="score">0</strong><span>POINTS</span></div></div></section>
 <nav class="toolbar" id="filters" aria-label="カテゴリ"></nav><section class="grid" id="challenge-grid"><div class="empty">問題を読み込んでいます…</div></section>
-<footer>Dashboard domain · Cloud Vault / LocalStack</footer></main>
+<footer>Dashboard domain · Cloud Vault / Floci</footer></main>
 <dialog id="challenge-dialog"><div class="modal"><button class="close" id="close" aria-label="閉じる">×</button><div class="category" id="modal-category"></div><h2 id="modal-title"></h2><div class="meta" id="modal-meta"></div><p class="desc" id="modal-description"></p><div class="prereq" id="modal-prereq"></div><a class="modal-target" id="modal-target" target="_blank" rel="noreferrer">問題環境を開く ↗</a><details class="hints" id="modal-hints"><summary>ヒントを見る</summary><ul id="hint-list"></ul></details><form id="submit-form"><div class="quiz-options" id="quiz-options" role="radiogroup" aria-label="回答を選択" hidden></div><input id="flag-input" autocomplete="off" placeholder="TVAULT{...}" aria-label="Flag"><button class="submit" id="submit-button" type="submit">Flagを提出</button></form><p class="result" id="submit-result"></p></div></dialog>
 <script>
 const app=document.getElementById('app'),targetUrl=app.dataset.targetUrl,grid=document.getElementById('challenge-grid'),filters=document.getElementById('filters'),dialog=document.getElementById('challenge-dialog');

@@ -12,7 +12,7 @@ export AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID:-test}"
 export AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY:-test}"
 export AWS_DEFAULT_REGION="${AWS_DEFAULT_REGION:-us-east-1}"
 
-AWS_LOCAL=(aws --endpoint-url http://127.0.0.1:4566)
+AWS_LOCAL=(aws --endpoint-url "${AWS_ENDPOINT_URL:-http://127.0.0.1:4566}")
 
 put_object() {
   local source_file="$1"

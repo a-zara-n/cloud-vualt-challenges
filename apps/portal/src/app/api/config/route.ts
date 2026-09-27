@@ -5,15 +5,15 @@ import {
 } from "@aws-sdk/client-cognito-identity-provider";
 import { createCognitoClient } from "@/lib/cognito-client";
 
-const localstackEndpoint =
+const flociEndpoint =
   process.env.AWS_ENDPOINT_URL ??
-  process.env.LOCALSTACK_ENDPOINT ??
+  process.env.FLOCI_ENDPOINT ??
   "http://127.0.0.1:4566";
 const region =
   process.env.AWS_REGION ?? process.env.AWS_DEFAULT_REGION ?? "us-east-1";
 
 async function resolveLocalCognitoConfig() {
-  const client = createCognitoClient({ region, endpoint: localstackEndpoint });
+  const client = createCognitoClient({ region, endpoint: flociEndpoint });
 
   const pools = await client.send(new ListUserPoolsCommand({ MaxResults: 10 }));
   const pool = pools.UserPools?.find((candidate) =>
@@ -47,7 +47,7 @@ async function resolveLocalCognitoConfig() {
 export async function GET() {
   const configuredUserPoolId = process.env.COGNITO_USER_POOL_ID;
   const configuredClientId = process.env.COGNITO_CLIENT_ID;
-  const localConfig = localstackEndpoint
+  const localConfig = flociEndpoint
     ? await resolveLocalCognitoConfig().catch(() => null)
     : null;
 

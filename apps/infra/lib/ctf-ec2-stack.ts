@@ -3,6 +3,7 @@ import * as apigateway from 'aws-cdk-lib/aws-apigateway'
 import * as lambda from 'aws-cdk-lib/aws-lambda'
 import * as path from 'node:path'
 import type { Construct } from 'constructs'
+import { localRestApiUrl } from './local-api-url'
 
 interface CtfEc2EmulatorStackProps extends cdk.StackProps {
   stage: string
@@ -43,7 +44,7 @@ export class CtfEc2EmulatorStack extends cdk.Stack {
     })
 
     this.internalFetchEndpoint = props.stage === 'local'
-      ? `http://${api.restApiId}.execute-api.localhost.localstack.cloud:4566/internal`
+      ? localRestApiUrl(api.restApiId, 'internal').replace(/\/$/, '')
       : api.url.replace(/\/$/, '')
     this.describeInstancesEndpoint = `${this.internalFetchEndpoint}/describe-instances`
 

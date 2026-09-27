@@ -2,7 +2,7 @@
  * Cloud Vault challenge solver - Main Orchestrator
  *
  * Validates all 27 CTF challenges by running stage solvers
- * against LocalStack services and static file analysis.
+ * against Floci services and static file analysis.
  *
  * Usage:
  *   bun run src/index.ts              # Run all stages
@@ -18,7 +18,7 @@ import type { SolverContext } from "./stages/tutorials.js";
 import { solveMain } from "./stages/main.js";
 import { solveBonus } from "./stages/bonus.js";
 import { solveAdvanced } from "./stages/advanced.js";
-import { LOCALSTACK_ENDPOINT } from "./lib/aws.js";
+import { FLOCI_ENDPOINT } from "./lib/aws.js";
 import { defaultStage, normalizeTarget, portalUrlWithPath } from "./lib/target.js";
 import type { SolverTarget } from "./lib/target.js";
 
@@ -54,9 +54,9 @@ function parseArgs(): CliArgs {
   return { stage, staticOnly, target };
 }
 
-async function checkLocalStack(endpoint: string): Promise<boolean> {
+async function checkFloci(endpoint: string): Promise<boolean> {
   try {
-    const resp = await fetch(new URL("/_localstack/health", endpoint), {
+    const resp = await fetch(new URL("/_floci/health", endpoint), {
       signal: AbortSignal.timeout(3000),
     });
     return resp.ok;
@@ -68,7 +68,7 @@ async function checkLocalStack(endpoint: string): Promise<boolean> {
 async function checkPortal(portalUrl: string): Promise<boolean> {
   try {
     const resp = await fetch(portalUrlWithPath(portalUrl, "/api/ping"), {
-      signal: AbortSignal.timeout(3000),
+      signal: AbortSignal.timeout(15000),
     });
     return resp.ok;
   } catch {
@@ -121,10 +121,10 @@ async function main(): Promise<void> {
   const portalUrl = process.env.CTF_PORTAL_URL ?? process.env.TVAULT_PORTAL_URL ?? defaultPortalUrl(cliArgs.target);
 
   // Environment checks
-  const localstackAvailable = cliArgs.staticOnly
+  const flociAvailable = cliArgs.staticOnly
     ? false
     : cliArgs.target === "local"
-      ? await checkLocalStack(LOCALSTACK_ENDPOINT)
+      ? await checkFloci(FLOCI_ENDPOINT)
       : false;
   const portalAvailable = cliArgs.staticOnly ? false : await checkPortal(portalUrl);
   const awsAvailable = !cliArgs.staticOnly && cliArgs.target !== "local";
@@ -132,7 +132,7 @@ async function main(): Promise<void> {
   reporter.printEnvironment({
     target: cliArgs.target,
     stage,
-    localstack: localstackAvailable,
+    floci: flociAvailable,
     portal: portalAvailable,
     portalUrl,
     aws: awsAvailable,
@@ -142,11 +142,11 @@ async function main(): Promise<void> {
     projectRoot: PROJECT_ROOT,
     target: cliArgs.target,
     stage,
-    localstackAvailable,
+    flociAvailable,
     awsAvailable,
     portalAvailable,
     portalUrl,
-    localstackEndpoint: LOCALSTACK_ENDPOINT,
+    flociEndpoint: FLOCI_ENDPOINT,
     staticOnly: cliArgs.staticOnly,
   };
 

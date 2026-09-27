@@ -4,6 +4,7 @@ import * as apigateway from 'aws-cdk-lib/aws-apigateway'
 import * as lambda from 'aws-cdk-lib/aws-lambda'
 import * as path from 'node:path'
 import type { Construct } from 'constructs'
+import { localRestApiUrl } from './local-api-url'
 
 interface ChallengeServerStackProps extends cdk.StackProps {
   stage: string
@@ -25,7 +26,7 @@ function configuredHints(): string {
     JSON.stringify([
       'robots.txt とHTMLソースを確認してください。',
       'ログインに失敗したときのAPIレスポンスを確認してください。',
-      '漏洩した認証情報を設定し、LocalStackのS3バケットを調べてください。',
+      '漏洩した認証情報を設定し、FlociのS3バケットを調べてください。',
     ]),
     1200,
   )
@@ -114,7 +115,7 @@ export class ChallengeServerStack extends cdk.Stack {
       ),
       CTF_CHALLENGE_DESCRIPTION: configuredValue(
         'CLOUD_VAULT_CTF_DESCRIPTION',
-        'TechVault社からクラウド情報漏洩の調査を依頼されました。社員ポータルを起点に漏洩経路を追い、LocalStack上に残された最終証拠を回収してください。',
+        'TechVault社からクラウド情報漏洩の調査を依頼されました。社員ポータルを起点に漏洩経路を追い、Floci上に残された最終証拠を回収してください。',
         1600,
       ),
       CTF_CHALLENGE_CATEGORY: configuredValue(
@@ -167,7 +168,7 @@ export class ChallengeServerStack extends cdk.Stack {
       })
       targetUrl =
         props.stage === 'local'
-          ? `http://${targetApi.restApiId}.execute-api.localhost.localstack.cloud:4566/target/`
+          ? localRestApiUrl(targetApi.restApiId, 'target')
           : targetApi.url
     }
     this.targetUrl = targetUrl
@@ -197,7 +198,7 @@ export class ChallengeServerStack extends cdk.Stack {
 
     this.challengeServerUrl =
       props.stage === 'local'
-        ? `http://${dashboardApi.restApiId}.execute-api.localhost.localstack.cloud:4566/dashboard/`
+        ? localRestApiUrl(dashboardApi.restApiId, 'dashboard')
         : dashboardApi.url
 
     new cdk.CfnOutput(this, 'ChallengeServerUrl', {

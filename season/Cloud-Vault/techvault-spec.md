@@ -1829,7 +1829,7 @@ metadata に `tenantName`, `username`, `password`, `documentBody` が含まれ�
 | ライフサイクルポリシー | **未設定** |
 | リポジトリの可視性 | プライベート |
 
-> 環境ごとにリポジトリ名の suffix が変わる。dev は `techvault/data-processor-dev`、prod は `techvault/data-processor-prod`、LocalStack は `techvault/data-processor` を使う。
+> 環境ごとにリポジトリ名の suffix が変わる。dev は `techvault/data-processor-dev`、prod は `techvault/data-processor-prod`、Floci は `techvault/data-processor` を使う。
 
 > **latestタグの運用背景**: PoC段階で `latest` タグを使い始め、そのままの運用が続いている。バージョニングしてタグ付けするのがベストプラクティスと知ってはいるが、デプロイスクリプトの書き直しが面倒で後回しになっている。
 
@@ -2049,7 +2049,7 @@ fields @timestamp, userIdentity.arn, requestParameters.roleArn
 
 #### Stage 4 / Stage 5 用 CloudTrailログ設計
 
-**配布ファイル**: `cloudtrail-logs.zip`（中身は `cloudtrail-logs.json`）。S3/LocalStackでは `stage4/cloudtrail-logs.zip` として配置する。実 CloudTrail 形式の参照用ログは `AWSLogs/123456789012/CloudTrail/ap-northeast-1/2026/02/01/123456789012_CloudTrail_ap-northeast-1_20260201T0000Z_techvault.json.gz` にも配置する。
+**配布ファイル**: `cloudtrail-logs.zip`（中身は `cloudtrail-logs.json`）。ローカルの S3 では `stage4/cloudtrail-logs.zip` として配置する。実 CloudTrail 形式の参照用ログは `AWSLogs/123456789012/CloudTrail/ap-northeast-1/2026/02/01/123456789012_CloudTrail_ap-northeast-1_20260201T0000Z_techvault.json.gz` にも配置する。
 
 | カテゴリ | 件数 | 説明 |
 |---------|------|------|

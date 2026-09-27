@@ -22,7 +22,7 @@ interface SeedAssetsResult {
 }
 
 const SOURCE_ACCOUNT_ID = "123456789012";
-const LOCALSTACK_ACCOUNT_ID = "000000000000";
+const LOCAL_EMULATOR_ACCOUNT_ID = "000000000000";
 const DEFAULT_REGION = "ap-northeast-1";
 const TITAN_EMBEDDING_MODEL_ID = "amazon.titan-embed-text-v2:0";
 const TITAN_EMBEDDING_DIMENSIONS = 1024;
@@ -63,7 +63,7 @@ function resolveAccountId(): string {
   );
   if (explicit) return explicit;
 
-  if (isLocalSeed()) return LOCALSTACK_ACCOUNT_ID;
+  if (isLocalSeed()) return LOCAL_EMULATOR_ACCOUNT_ID;
 
   try {
     const accountId = execFileSync(

@@ -7,7 +7,7 @@ CDKから構築するBasic認証付きCTFダッシュボードも含みます。
 イベント運営者向けのユーザー管理、チーム管理、永続ランキング機能は含みません。
 
 > [!WARNING]
-> このプロジェクトは CTF のために、漏洩クレデンシャル、過剰権限、SSRF、公開アセットなどの脆弱な構成を意図的に作ります。実運用アカウントや信頼済みネットワークにはデプロイせず、専用AWSアカウントまたはLocalStackで実行してください。
+> このプロジェクトは CTF のために、漏洩クレデンシャル、過剰権限、SSRF、公開アセットなどの脆弱な構成を意図的に作ります。実運用アカウントや信頼済みネットワークにはデプロイせず、専用AWSアカウントまたはFlociで実行してください。
 
 ## 構成
 
@@ -17,7 +17,7 @@ apps/
 └── infra/           # 問題用 AWS CDK スタック
 scenario/solver/     # 問題環境の検証
 season/Cloud-Vault/  # 問題定義、設計、運営資料、生成素材
-scripts/             # LocalStack、デプロイ、アセット生成
+scripts/             # Floci、デプロイ、アセット生成
 setup/               # 環境別セットアップ手順
 ```
 
@@ -26,7 +26,7 @@ setup/               # 環境別セットアップ手順
 - Bun
 - Docker
 - AWS CLI
-- LocalStack Pro API key（TechVault Portalを含む全環境を構築する場合のみ）
+- Floci 2.1.0（Docker Compose で自動起動）
 - AWS CDK と 1Password CLI（AWSへデプロイする場合）
 
 ## ローカル実行
@@ -39,9 +39,9 @@ cp apps/portal/.env.example apps/portal/.env.local
 bun run dev
 ```
 
-Portal は `http://localhost:3000` で起動します。AWSを使う問題まで含めた環境は LocalStack に構築します。
+Portal は `http://localhost:3000` で起動します。AWSを使う問題まで含めた環境は Floci に構築します。
 
-LocalStackを使わず、CTFダッシュボードと問題環境をローカル表示する場合:
+Flociを使わず、CTFダッシュボードと問題環境をローカル表示する場合:
 
 ```bash
 test -f .env || cp .env.example .env
@@ -53,10 +53,10 @@ bun run dev:challenge
 ダッシュボードの既定Basic認証は `cloudvault` / `vault-ctf-2026` です。
 
 ```bash
-bun run dev:localstack
+bun run dev:floci
 ```
 
-API key不要のLocalStack Community 4.14へ、全問題を表示するCTFダッシュボードと問題環境をそれぞれ別のLambda + API Gatewayとしてデプロイします。完了時に2つのURLを表示します。TechVault Portalを含む全環境は `LOCALSTACK_API_KEY=... bun run dev:localstack:full` で構築します。詳細は [setup/localstack.md](setup/localstack.md) を参照してください。
+Floci 2.1.0へ、全問題を表示するCTFダッシュボードと問題環境をそれぞれ別のLambda + API Gatewayとしてデプロイします。完了時に2つのURLを表示します。TechVault Portalを含む全環境は `bun run dev:floci:full` で構築します。詳細は [setup/floci.md](setup/floci.md) を参照してください。
 
 ## ダッシュボードの環境変数
 
@@ -90,7 +90,7 @@ bun run build
 bun run scenario -- --static
 ```
 
-LocalStack 構築後は `bun run scenario`、AWS dev 環境に対しては `bun run scenario:dev` で検証できます。
+Floci 構築後は `bun run scenario`、AWS dev 環境に対しては `bun run scenario:dev` で検証できます。
 
 ## AWS デプロイ
 
@@ -111,14 +111,14 @@ CTF_STAGE=dev bun run seed:assets
 |---|---|
 | `bun run dev` | Portal の開発サーバーを起動 |
 | `bun run dev:challenge` | ダッシュボードを3001、問題環境を3002で起動 |
-| `bun run setup` | LocalStack Pro の全問題環境を構築 |
-| `bun run dev:localstack` | LocalStack Communityへダッシュボードと問題環境を別ドメインで構築 |
-| `bun run dev:localstack:full` | LocalStack ProへPortalを含む全環境を構築 |
+| `bun run setup` | Floci の全問題環境を構築 |
+| `bun run dev:floci` | Flociへダッシュボードと問題環境を別のAPIとして構築 |
+| `bun run dev:floci:full` | FlociへPortalを含む全環境を構築 |
 | `bun run seed:assets` | 問題アセットを生成・投入 |
 | `bun run cdk:synth` | CDK テンプレートを生成 |
 | `bun run cdk:deploy:dev` | AWS dev へデプロイ |
 | `bun run cdk:deploy:prod` | AWS production へデプロイ |
-| `bun run scenario` | LocalStack の問題環境を検証 |
+| `bun run scenario` | Floci の問題環境を検証 |
 
 ## 移植元
 

@@ -76,7 +76,7 @@ export class PortalFrontendStack extends cdk.Stack {
         // Stage 0 CTF route: keep the forgotten debug leak enabled in dev/prod too.
         DEBUG: 'true',
         AWS_ENDPOINT_URL: isLocal ? localEndpoint : '',
-        LOCALSTACK_ENDPOINT: isLocal ? localEndpoint : '',
+        FLOCI_ENDPOINT: isLocal ? localEndpoint : '',
         COGNITO_USER_POOL_ID: props.cognitoUserPoolId,
         COGNITO_CLIENT_ID: props.cognitoUserPoolClientId,
         PORTAL_ADMIN_EMAIL_PARAM: isLocal ? '' : portalAdminEmail.parameterName,
@@ -176,7 +176,7 @@ export class PortalFrontendStack extends cdk.Stack {
     })
 
     const defaultPortalUrl = isLocal
-      ? `http://${httpApi.ref}.execute-api.localhost.localstack.cloud:4566`
+      ? `http://${httpApi.ref}.execute-api.localhost.floci.io:4566`
       : `https://${httpApi.ref}.execute-api.${this.region}.amazonaws.com`
     const customDomainName = configureHttpApiCustomDomain(this, {
       api: httpApi,

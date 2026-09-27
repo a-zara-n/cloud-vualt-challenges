@@ -8,7 +8,7 @@ const awsEnv = {
   AWS_DEFAULT_REGION: process.env.AWS_DEFAULT_REGION ?? "us-east-1",
 };
 const endpoint = process.env.AWS_ENDPOINT_URL ?? "http://127.0.0.1:4566";
-const registry = "000000000000.dkr.ecr.us-east-1.localhost.localstack.cloud:4566";
+const registry = "000000000000.dkr.ecr.us-east-1.localhost:4566";
 const cloudTrailObjectKey =
   "AWSLogs/123456789012/CloudTrail/ap-northeast-1/2026/02/01/" +
   "123456789012_CloudTrail_ap-northeast-1_20260201T0000Z_techvault.json.gz";
@@ -85,11 +85,17 @@ async function ensureEcrRepository(name: string): Promise<void> {
 }
 
 async function ensureDockerImage(): Promise<void> {
-  await runCommand("docker login localstack ecr", [
-    "zsh",
-    "-lc",
-    `aws --endpoint-url ${endpoint} ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${registry}`,
-  ], { env: awsEnv });
+  // Floci accepts the fixed local registry token. Keep it in an isolated
+  // Docker config so host credential helpers cannot block this setup.
+  const dockerConfigDir = "/tmp/cloud-vault-floci-docker-config";
+  const dockerHost = process.env.DOCKER_HOST ?? await captureCommand("docker host", [
+    "docker", "context", "inspect", "--format", "{{.Endpoints.docker.Host}}",
+  ]);
+  mkdirSync(dockerConfigDir, { recursive: true });
+  writeFileSync(join(dockerConfigDir, "config.json"), JSON.stringify({
+    auths: { [registry]: { auth: Buffer.from("AWS:floci").toString("base64") } },
+  }));
+  const dockerEnv = { DOCKER_CONFIG: dockerConfigDir, DOCKER_HOST: dockerHost };
 
   await ensureEcrRepository("techvault/data-processor-local");
   await ensureEcrRepository("techvault/data-processor");
@@ -100,7 +106,7 @@ async function ensureDockerImage(): Promise<void> {
     "-t",
     "cloud-vault/data-processor:latest",
     "apps/infra/docker/data-processor",
-  ]);
+  ], { env: dockerEnv });
 
   for (const repo of ["techvault/data-processor-local", "techvault/data-processor"]) {
     const image = `${registry}/${repo}:latest`;
@@ -109,8 +115,8 @@ async function ensureDockerImage(): Promise<void> {
       "tag",
       "cloud-vault/data-processor:latest",
       image,
-    ]);
-    await runCommand("docker push data-processor", ["docker", "push", image]);
+    ], { env: dockerEnv });
+    await runCommand("docker push data-processor", ["docker", "push", image], { env: dockerEnv });
   }
 }
 
@@ -301,15 +307,40 @@ async function ensureCognitoAutoConfirm(): Promise<void> {
     "--lambda-config",
     `PreSignUp=${functionArn}`,
   ], { env: awsEnv });
+
+  const employeeEmail = process.env.PORTAL_EMPLOYEE_EMAIL ?? "employee@techvault.example";
+  const employeePassword = process.env.PORTAL_EMPLOYEE_PASSWORD ?? "EmployeePass2026!";
+  const userExists = await commandSucceeds([
+    "aws", "--endpoint-url", endpoint, "cognito-idp", "admin-get-user",
+    "--user-pool-id", userPoolId, "--username", employeeEmail,
+  ], { env: awsEnv });
+
+  if (!userExists) {
+    await runCommand("cognito employee create", [
+      "aws", "--endpoint-url", endpoint, "cognito-idp", "admin-create-user",
+      "--user-pool-id", userPoolId, "--username", employeeEmail,
+      "--message-action", "SUPPRESS", "--user-attributes",
+      `Name=email,Value=${employeeEmail}`,
+      "Name=email_verified,Value=true",
+      "Name=custom:role,Value=employee",
+      "Name=custom:department,Value=engineering",
+    ], { env: awsEnv });
+  }
+
+  await captureCommand("cognito employee password", [
+    "aws", "--endpoint-url", endpoint, "cognito-idp", "admin-set-user-password",
+    "--user-pool-id", userPoolId, "--username", employeeEmail,
+    "--password", employeePassword, "--permanent",
+  ], { env: awsEnv });
 }
 
 async function main(): Promise<void> {
   const args = new Set(process.argv.slice(2));
-  const localstackRequired = !args.has("--static-only");
+  const flociRequired = !args.has("--static-only");
 
   await ensureGitRepos();
 
-  if (!localstackRequired) {
+  if (!flociRequired) {
     console.log("[setup additional] static assets only");
     return;
   }

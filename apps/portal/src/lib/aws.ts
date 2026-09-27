@@ -1,4 +1,4 @@
-// AWS SDK設定（LocalStack対応）
+// AWS SDK設定（Floci対応）
 export const awsConfig = {
   region: process.env.AWS_REGION ?? "ap-northeast-1",
   ...(process.env.AWS_ENDPOINT_URL

@@ -148,7 +148,7 @@ https://<バケット名>.s3.<リージョン>.amazonaws.com/
 https://techvault-public-assets.s3.ap-northeast-1.amazonaws.com/
 ```
 
-ローカル環境では LocalStack の S3 エンドポイントを使う：
+ローカル環境では Floci の S3 エンドポイントを使う：
 ```
 http://localhost:4566/techvault-public-assets-local/
 ```

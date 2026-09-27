@@ -14,22 +14,18 @@ async function main(): Promise<void> {
     "--static-only",
   ]);
 
-  await runCommand("localstack", ["./scripts/localstack.sh", "up"]);
+  await runCommand("floci", ["./scripts/floci.sh", "up"]);
 
   if (!skipBootstrap) {
     await runCommand("infra bootstrap", [
       "zsh",
       "-lc",
-      "bun run --cwd apps/infra scripts/cdklocal.ts bootstrap",
+      "bun run --cwd apps/infra scripts/cdkfloci.ts bootstrap --context stage=local --context challengeOnly=true",
     ]);
   }
 
   if (!skipDeploy) {
-    await runCommand("infra deploy", [
-      "zsh",
-      "-lc",
-      "bun run --cwd apps/infra scripts/cdklocal.ts deploy 'ctf-*-local' --require-approval never",
-    ]);
+    await runCommand("infra deploy", ["bun", "run", "scripts/deploy-floci.ts"]);
 
     await runCommand("s3 assets", ["./scripts/upload-local-s3-assets.sh"]);
     await runCommand("additional local assets", [

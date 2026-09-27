@@ -507,7 +507,7 @@ async function solveStage2A(ctx: SolverContext): Promise<SolverOutput> {
     }
   }
 
-  // Fallback: check the local previous-version asset used by LocalStack setup.
+  // Fallback: check the local previous-version asset used by Floci setup.
   try {
     const versionHistoryPath = `${ctx.projectRoot}/apps/infra/assets/s3-version-history/techvault-internal-2026/documents/password_hint.txt.v1`;
     const versionHistoryFile = Bun.file(versionHistoryPath);
@@ -712,7 +712,7 @@ async function solveStage2G(ctx: SolverContext): Promise<SolverOutput> {
     }
   }
 
-  // Bedrock Agent is not available on LocalStack; CDK seed data is the fallback.
+  // Bedrock Agent is not available on Floci; CDK seed data is the fallback.
   try {
     const filePath = `${ctx.projectRoot}/apps/infra/lib/ctf-bedrock-stack.ts`;
     const file = Bun.file(filePath);

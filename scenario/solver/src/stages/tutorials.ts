@@ -23,11 +23,11 @@ export interface SolverContext {
   readonly projectRoot: string;
   readonly target: SolverTarget;
   readonly stage: string;
-  readonly localstackAvailable: boolean;
+  readonly flociAvailable: boolean;
   readonly awsAvailable: boolean;
   readonly portalAvailable: boolean;
   readonly portalUrl: string;
-  readonly localstackEndpoint: string;
+  readonly flociEndpoint: string;
   readonly staticOnly: boolean;
   readonly credentials?: AwsCredentials;
 }
@@ -289,12 +289,12 @@ async function solveT6(ctx: SolverContext): Promise<SolverOutput> {
       }
       return {
         passed: false,
-        error: "LocalStack not available; flag not found in CDK source",
+        error: "Floci not available; flag not found in CDK source",
       };
     } catch {
       return {
         passed: false,
-        error: "LocalStack not available and CDK source read failed",
+        error: "Floci not available and CDK source read failed",
       };
     }
   }

@@ -9,9 +9,9 @@
   "scripts": {
     "dev": "bun run --cwd apps/portal dev",
     "dev:challenge": "bun run scripts/dev-challenge-server.ts",
-    "dev:localstack": "bun run scripts/dev-localstack.ts",
-    "dev:localstack:full": "bun run scripts/dev-localstack.ts --full",
-    "dev:localstack:bedrock": "bun run scripts/dev-localstack.ts --with-aws-bedrock",
+    "dev:floci": "bun run scripts/dev-floci.ts",
+    "dev:floci:full": "bun run scripts/dev-floci.ts --full",
+    "dev:floci:bedrock": "bun run scripts/dev-floci.ts --with-aws-bedrock",
     "chat:bedrock-proxy": "bun run scripts/bedrock-chat-proxy.ts",
     "setup": "bun run scripts/setup.ts",
     "seed:assets": "bun run scripts/seed-assets.ts",
@@ -35,10 +35,10 @@
     "secrets:deploy:prod": "bun run scripts/seed-secrets.ts --stage prod",
     "ecr:push:dev": "bun run scripts/push-ecr-assets.ts --stage dev",
     "ecr:push:prod": "bun run scripts/push-ecr-assets.ts --stage prod",
-    "localstack:up": "./scripts/localstack.sh up",
-    "localstack:down": "./scripts/localstack.sh down",
-    "localstack:logs": "./scripts/localstack.sh logs",
-    "localstack:status": "./scripts/localstack.sh status"
+    "floci:up": "./scripts/floci.sh up",
+    "floci:down": "./scripts/floci.sh down",
+    "floci:logs": "./scripts/floci.sh logs",
+    "floci:status": "./scripts/floci.sh status"
   },
   "dependencies": {
     "@aws-sdk/client-bedrock-runtime": "^3.700.0",

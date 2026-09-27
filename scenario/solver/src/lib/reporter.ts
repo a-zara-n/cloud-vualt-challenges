@@ -36,7 +36,7 @@ interface Summary {
 interface EnvironmentInfo {
   readonly target: string;
   readonly stage: string;
-  readonly localstack: boolean;
+  readonly floci: boolean;
   readonly aws: boolean;
   readonly portal: boolean;
   readonly portalUrl: string;
@@ -76,7 +76,7 @@ export class Reporter {
   }
 
   printEnvironment(env: EnvironmentInfo): void {
-    const ls = env.localstack
+    const ls = env.floci
       ? `${GREEN}Running${RESET}`
       : `${YELLOW}Not available${RESET}`;
     const aws = env.aws
@@ -88,7 +88,7 @@ export class Reporter {
     console.log(`  Target:      ${env.target}`);
     console.log(`  Stage:       ${env.stage}`);
     console.log(`  AWS:         ${aws}`);
-    console.log(`  LocalStack:  ${ls}`);
+    console.log(`  Floci:       ${ls}`);
     console.log(`  Portal:      ${pt}`);
     console.log(`  Portal URL:  ${env.portalUrl}`);
     console.log("");

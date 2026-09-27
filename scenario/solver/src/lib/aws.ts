@@ -13,8 +13,8 @@ import { BedrockAgentClient } from "@aws-sdk/client-bedrock-agent";
 import { BedrockAgentRuntimeClient } from "@aws-sdk/client-bedrock-agent-runtime";
 import type { SolverTarget } from "./target.js";
 
-const LOCALSTACK_ENDPOINT =
-  process.env.LOCALSTACK_ENDPOINT ?? process.env.AWS_ENDPOINT_URL ?? "http://localhost:4566";
+const FLOCI_ENDPOINT =
+  process.env.FLOCI_ENDPOINT ?? process.env.AWS_ENDPOINT_URL ?? "http://localhost:4566";
 const REGION = process.env.AWS_REGION ?? process.env.AWS_DEFAULT_REGION ?? "ap-northeast-1";
 const CREDENTIALS = {
   accessKeyId: process.env.AWS_ACCESS_KEY_ID ?? "test",
@@ -39,12 +39,12 @@ interface ClientConfig {
   forcePathStyle?: boolean;
 }
 
-function shouldUseLocalStack(ctx?: RuntimeContext): boolean {
+function shouldUseFloci(ctx?: RuntimeContext): boolean {
   return (ctx?.target ?? process.env.CTF_SOLVER_TARGET ?? "local") === "local";
 }
 
 function baseConfig(ctx?: RuntimeContext): ClientConfig {
-  if (!shouldUseLocalStack(ctx)) {
+  if (!shouldUseFloci(ctx)) {
     return {
       region: REGION,
       credentials: ctx?.credentials,
@@ -53,7 +53,7 @@ function baseConfig(ctx?: RuntimeContext): ClientConfig {
 
   return {
     region: REGION,
-    endpoint: LOCALSTACK_ENDPOINT,
+    endpoint: FLOCI_ENDPOINT,
     credentials: ctx?.credentials ?? CREDENTIALS,
   };
 }
@@ -61,7 +61,7 @@ function baseConfig(ctx?: RuntimeContext): ClientConfig {
 export function createS3Client(ctx?: RuntimeContext): S3Client {
   return new S3Client({
     ...baseConfig(ctx),
-    forcePathStyle: shouldUseLocalStack(ctx),
+    forcePathStyle: shouldUseFloci(ctx),
   });
 }
 
@@ -105,4 +105,4 @@ export function createBedrockAgentRuntimeClient(ctx?: RuntimeContext): BedrockAg
   return new BedrockAgentRuntimeClient(baseConfig(ctx));
 }
 
-export { LOCALSTACK_ENDPOINT, REGION, CREDENTIALS };
+export { FLOCI_ENDPOINT, REGION, CREDENTIALS };

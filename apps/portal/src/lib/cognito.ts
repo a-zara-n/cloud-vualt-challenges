@@ -9,7 +9,7 @@ export async function verifyCognitoToken(token: string): Promise<{
 }> {
   const userPoolId = process.env.COGNITO_USER_POOL_ID;
   const region = process.env.AWS_REGION ?? "ap-northeast-1";
-  const isLocal = Boolean(process.env.AWS_ENDPOINT_URL || process.env.LOCALSTACK_ENDPOINT);
+  const isLocal = Boolean(process.env.AWS_ENDPOINT_URL || process.env.FLOCI_ENDPOINT);
 
   if (isLocal || !userPoolId) {
     return jose.decodeJwt(token) as {

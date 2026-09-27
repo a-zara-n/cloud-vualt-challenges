@@ -32,7 +32,7 @@ export class CtfS3Stack extends cdk.Stack {
     this.publicAssetsBucket = new s3.Bucket(this, 'PublicAssets', {
       bucketName: `techvault-public-assets-${props.stage}`,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
-      autoDeleteObjects: true,
+      autoDeleteObjects: props.stage !== 'local',
       blockPublicAccess: new s3.BlockPublicAccess({
         blockPublicAcls: false,
         ignorePublicAcls: false,
@@ -64,7 +64,7 @@ export class CtfS3Stack extends cdk.Stack {
     this.internalBucket = new s3.Bucket(this, 'Internal', {
       bucketName: `techvault-internal-2026-${props.stage}`,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
-      autoDeleteObjects: true,
+      autoDeleteObjects: props.stage !== 'local',
       versioned: true,
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
       objectOwnership: s3.ObjectOwnership.BUCKET_OWNER_ENFORCED,
@@ -157,7 +157,7 @@ export class CtfS3Stack extends cdk.Stack {
     this.ctoPrivateBucket = new s3.Bucket(this, 'CtoPrivate', {
       bucketName: `tvault-cto-private-7a3f9c-${props.stage}`,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
-      autoDeleteObjects: true,
+      autoDeleteObjects: props.stage !== 'local',
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
       objectOwnership: s3.ObjectOwnership.BUCKET_OWNER_ENFORCED,
       encryption: s3.BucketEncryption.S3_MANAGED,
@@ -189,7 +189,7 @@ export class CtfS3Stack extends cdk.Stack {
     this.cloudTrailBucket = new s3.Bucket(this, 'CloudTrailLogs', {
       bucketName: `techvault-cloudtrail-logs-${props.stage}`,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
-      autoDeleteObjects: true,
+      autoDeleteObjects: props.stage !== 'local',
       versioned: true,
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
       objectOwnership: s3.ObjectOwnership.BUCKET_OWNER_ENFORCED,

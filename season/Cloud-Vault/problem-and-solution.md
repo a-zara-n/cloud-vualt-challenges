@@ -7,7 +7,7 @@
 
 - `<stage>` は `local` / `dev` / `prod` のいずれかに置き換える。
 - `prod` 以外では多くのAWSリソース名に `-<stage>` が付く。例: `svc-portal-dev-dev`, `techvault-internal-2026-dev`。
-- LocalStack を使う場合はAWS CLIに `--endpoint-url http://127.0.0.1:4566` を付ける。
+- Floci を使う場合はAWS CLIに `--endpoint-url http://127.0.0.1:4566` を付ける。
 - ポータルURLは環境に応じて置き換える。例: `http://localhost:3000/` または `https://techvault.dev.cloudfortress.security.jaws-ug.jp/`。
 
 ```bash
@@ -90,7 +90,7 @@ curl "$PORTAL_URL/robots.txt"
 curl "https://techvault-public-assets-<stage>.s3.ap-northeast-1.amazonaws.com/flag.txt"
 ```
 
-LocalStack:
+Floci:
 
 ```bash
 curl "http://localhost:4566/techvault-public-assets-local/flag.txt"

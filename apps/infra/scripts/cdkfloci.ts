@@ -7,7 +7,7 @@ const bin = resolve(nodePath, "aws-cdk", "bin", "cdk");
 const hasOutputArg = args.some((arg) => arg === "--output" || arg.startsWith("--output="));
 const outputArgs = hasOutputArg
   ? []
-  : ["--output", resolve(infraRoot, "cdk.out.localstack")];
+  : ["--output", resolve(infraRoot, "cdk.out.floci")];
 const env: Record<string, string | undefined> = {
   ...process.env,
   AWS_ACCESS_KEY_ID: "test",
@@ -16,9 +16,9 @@ const env: Record<string, string | undefined> = {
   AWS_EC2_METADATA_DISABLED: "true",
   AWS_REGION: "us-east-1",
   AWS_DEFAULT_REGION: "us-east-1",
-  AWS_ENDPOINT_URL: process.env.AWS_ENDPOINT_URL ?? "http://localhost.localstack.cloud:4566",
+  AWS_ENDPOINT_URL: process.env.AWS_ENDPOINT_URL ?? "http://localhost:4566",
   AWS_ENDPOINT_URL_S3:
-    process.env.AWS_ENDPOINT_URL_S3 ?? "http://s3.localhost.localstack.cloud:4566",
+    process.env.AWS_ENDPOINT_URL_S3 ?? "http://localhost:4566",
   AWS_S3_FORCE_PATH_STYLE: "true",
   PWD: infraRoot,
   NODE_PATH: nodePath,
@@ -29,7 +29,7 @@ delete env.AWS_DEFAULT_PROFILE;
 
 const proc = Bun.spawn({
   // Newer CDK CLIs support AWS_ENDPOINT_URL directly. Invoking the CLI with
-  // Node avoids aws-cdk-local's runtime patching, which lags CDK packaging changes.
+  // Node avoids local CDK wrappers' runtime patching, which lags CDK packaging changes.
   cmd: ["node", bin, ...args, ...outputArgs],
   cwd: infraRoot,
   env,

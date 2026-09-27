@@ -248,7 +248,7 @@ async function solveStage3C(ctx: SolverContext): Promise<SolverOutput> {
     }
   }
 
-  // Check if Cognito is available on LocalStack
+  // Check if Cognito is available on Floci
   if (hasAwsRuntime(ctx)) {
     try {
       const cognito = createCognitoClient(ctx);

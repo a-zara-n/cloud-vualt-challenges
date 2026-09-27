@@ -49,6 +49,7 @@ Thumbs.db
 
 # Docker volumes
 .localstack/
+.floci/
 scenario/.localstack/
 
 # TypeScript
@@ -57,6 +58,7 @@ scenario/.localstack/
 # CDK
 cdk.out/
 apps/infra/cdk.out.localstack/
+apps/infra/cdk.out.floci/
 apps/infra/cdk.out.aws-bedrock/
 
 # Playwright

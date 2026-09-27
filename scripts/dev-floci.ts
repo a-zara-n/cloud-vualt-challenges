@@ -3,7 +3,7 @@ import { captureCommand, commandSucceeds, localAwsEnv, runCommand } from "./_hel
 const endpoint = process.env.AWS_ENDPOINT_URL ?? "http://127.0.0.1:4566";
 const region = process.env.AWS_REGION ?? process.env.AWS_DEFAULT_REGION ?? "us-east-1";
 const defaultChatProxyUrl = "http://host.docker.internal:8787/chat";
-const localstackAwsEnv = localAwsEnv({
+const flociAwsEnv = localAwsEnv({
   AWS_DEFAULT_REGION: region,
   AWS_ENDPOINT_URL: endpoint,
   AWS_REGION: region,
@@ -24,7 +24,7 @@ async function getStackOutput(stackName: string, outputKey: string): Promise<str
     `Stacks[0].Outputs[?OutputKey=='${outputKey}'].OutputValue | [0]`,
     "--output",
     "text",
-  ], { env: localstackAwsEnv });
+  ], { env: flociAwsEnv });
 }
 
 async function ensureBucket(aws: string[], bucket: string): Promise<void> {
@@ -34,7 +34,7 @@ async function ensureBucket(aws: string[], bucket: string): Promise<void> {
     "head-bucket",
     "--bucket",
     bucket,
-  ], { env: localstackAwsEnv });
+  ], { env: flociAwsEnv });
 
   if (!exists) {
     await runCommand(`S3 bucket ${bucket}`, [
@@ -43,7 +43,7 @@ async function ensureBucket(aws: string[], bucket: string): Promise<void> {
       "create-bucket",
       "--bucket",
       bucket,
-    ], { env: localstackAwsEnv });
+    ], { env: flociAwsEnv });
   }
 }
 
@@ -62,7 +62,7 @@ async function seedStandaloneAssets(): Promise<void> {
     `s3://${publicBucket}/`,
     "--acl",
     "public-read",
-  ], { env: localstackAwsEnv });
+  ], { env: flociAwsEnv });
 
   await runCommand("generate scenario assets", [
     "bun",
@@ -76,14 +76,14 @@ async function seedStandaloneAssets(): Promise<void> {
     "sync",
     "apps/infra/.generated/s3/local/techvault-internal-2026",
     `s3://${internalBucket}/`,
-  ], { env: localstackAwsEnv });
+  ], { env: flociAwsEnv });
   await runCommand("final evidence", [
     ...aws,
     "s3",
     "cp",
     "apps/infra/assets/evidence/evidence/final_flag.txt",
     `s3://${internalBucket}/evidence/final_flag.txt`,
-  ], { env: localstackAwsEnv });
+  ], { env: flociAwsEnv });
 }
 
 async function ensureBedrockProxy(proxyUrl: string): Promise<void> {
@@ -114,8 +114,8 @@ async function main(): Promise<void> {
 
   console.log(
     fullEnvironment
-      ? "[dev:localstack] LocalStack 上に Cloud Vault 問題環境を構築します"
-      : "[dev:localstack] LocalStack 上にCTFダッシュボードと問題環境を構築します",
+      ? "[dev:floci] Floci 上に Cloud Vault 問題環境を構築します"
+      : "[dev:floci] Floci 上にCTFダッシュボードと問題環境を構築します",
   );
 
   if (withAwsBedrock) {
@@ -123,7 +123,7 @@ async function main(): Promise<void> {
   }
 
   if (!fullEnvironment) {
-    await runCommand("localstack", ["./scripts/localstack.sh", "up"]);
+    await runCommand("floci", ["./scripts/floci.sh", "up"]);
     await runCommand("challenge catalog", [
       "bun",
       "run",
@@ -132,12 +132,10 @@ async function main(): Promise<void> {
     await runCommand("infra bootstrap", [
       "zsh",
       "-lc",
-      "bun run --cwd apps/infra scripts/cdklocal.ts bootstrap --context stage=local --context challengeOnly=true",
+      "bun run --cwd apps/infra scripts/cdkfloci.ts bootstrap --context stage=local --context challengeOnly=true",
     ]);
     await runCommand("challenge server", [
-      "zsh",
-      "-lc",
-      "bun run --cwd apps/infra scripts/cdklocal.ts deploy ctf-challenge-server-local --context stage=local --context challengeOnly=true --require-approval never",
+      "bun", "run", "scripts/deploy-floci.ts", "--challenge-only",
     ]);
     await seedStandaloneAssets();
 
@@ -145,7 +143,7 @@ async function main(): Promise<void> {
       getStackOutput("ctf-challenge-server-local", "ChallengeServerUrl"),
       getStackOutput("ctf-challenge-server-local", "ProblemServerUrl"),
     ]);
-    console.log("\n[dev:localstack] 起動完了");
+    console.log("\n[dev:floci] 起動完了");
     console.log(`CTF dashboard: ${dashboardUrl}`);
     console.log(`Problem server: ${problemUrl}`);
     console.log(`EC2 endpoint: ${new URL("aws/ec2", problemUrl)}`);
@@ -175,7 +173,7 @@ async function main(): Promise<void> {
     getStackOutput("ctf-ec2-local", "EmulatedDescribeInstancesEndpoint"),
   ]);
 
-  console.log("\n[dev:localstack] 起動完了");
+  console.log("\n[dev:floci] 起動完了");
   console.log(`CTF dashboard: ${challengeUrl}`);
   console.log(`TechVault portal: ${portalUrl}`);
   console.log(`EC2 emulator: ${ec2EmulatorUrl}`);
@@ -190,8 +188,8 @@ try {
 } catch (error) {
   console.error(
     error instanceof Error
-      ? `[dev:localstack] ${error.message}`
-      : "[dev:localstack] failed"
+      ? `[dev:floci] ${error.message}`
+      : "[dev:floci] failed"
   );
   process.exit(1);
 }

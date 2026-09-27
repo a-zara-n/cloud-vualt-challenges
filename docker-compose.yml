@@ -1,25 +1,14 @@
 services:
-  localstack:
-    container_name: cloud-vault-localstack
-    image: ${LOCALSTACK_IMAGE:-localstack/localstack:4.14.0}
+  floci:
+    container_name: cloud-vault-floci
+    image: ${FLOCI_IMAGE:-floci/floci:2.1.0}
     ports:
-      - "127.0.0.1:4566:4566"            # LocalStack Gateway
-      - "127.0.0.1:4510-4559:4510-4559"  # External service ports
+      - "127.0.0.1:4566:4566"
     environment:
-      - LOCALSTACK_API_KEY=${LOCALSTACK_API_KEY:-}
-      - DEBUG=${DEBUG:-0}
-      - PERSISTENCE=1
-      - SERVICES=dynamodb,s3,lambda,apigateway,apigatewayv2,iam,cognito-idp,secretsmanager,ssm,ecr,ec2,sts,cloudformation,cloudwatch,logs,cloudtrail
-      - DEFAULT_REGION=ap-northeast-1
-      - LAMBDA_EXECUTOR=docker
-      - DOCKER_HOST=unix:///var/run/docker.sock
-      - DNS_NAME_PATTERNS_TO_RESOLVE_UPSTREAM=bedrock-runtime\.[^.]+\.amazonaws\.com
+      - FLOCI_STORAGE_MODE=persistent
+      - FLOCI_DEFAULT_REGION=us-east-1
+      - FLOCI_DOCKER_DOCKER_HOST=unix:///var/run/docker.sock
+      - FLOCI_RUN_AS_ROOT=true
     volumes:
-      - "${LOCALSTACK_VOLUME_DIR:-./.localstack}:/var/lib/localstack"
+      - "${FLOCI_VOLUME_DIR:-./.floci}:/app/data"
       - "/var/run/docker.sock:/var/run/docker.sock"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:4566/_localstack/health"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 15s

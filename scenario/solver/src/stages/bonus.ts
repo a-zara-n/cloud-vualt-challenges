@@ -266,7 +266,7 @@ async function solveStage3D(ctx: SolverContext): Promise<SolverOutput> {
       process.env.CTF_ECR_IMAGE_URI ??
       (isDevTarget(ctx)
         ? ""
-        : "000000000000.dkr.ecr.us-east-1.localhost.localstack.cloud:4566/techvault/data-processor:latest");
+        : "000000000000.dkr.ecr.us-east-1.localhost:4566/techvault/data-processor:latest");
     try {
       if (!image) {
         throw new Error("CTF_ECR_IMAGE_URI is not set");

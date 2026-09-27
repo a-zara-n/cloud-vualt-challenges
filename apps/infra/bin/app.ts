@@ -34,7 +34,7 @@ if (challengeOnly) {
     targetUrl: '',
   })
 } else {
-// LocalStack does not provide every production service used by this
+// Floci does not provide every production service used by this
 // challenge, so CloudTrail and Bedrock are created only for AWS stages.
 const localVpc = new CtfVpcStack(app, 'ctf-vpc-local', { stage: 'local' })
 const localIam = new CtfIamStack(app, 'ctf-iam-local', { stage: 'local' })
@@ -116,7 +116,9 @@ if (stage !== 'local') {
     env: awsEnv,
     s3Stack: s3,
   })
-  const bedrock = new CtfBedrockStack(app, `ctf-bedrock-${stage}`, { stage, env: awsEnv })
-  bedrock.addStackDependency(iam)
+  if (stage !== 'local') {
+    const bedrock = new CtfBedrockStack(app, `ctf-bedrock-${stage}`, { stage, env: awsEnv })
+    bedrock.addStackDependency(iam)
+  }
 }
 }

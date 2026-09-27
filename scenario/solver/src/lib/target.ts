@@ -11,7 +11,7 @@ export function defaultStage(target: SolverTarget): string {
 }
 
 export function hasAwsRuntime(ctx: SolverContext): boolean {
-  return !ctx.staticOnly && (ctx.localstackAvailable || ctx.awsAvailable);
+  return !ctx.staticOnly && (ctx.flociAvailable || ctx.awsAvailable);
 }
 
 export function isDevTarget(ctx: SolverContext): boolean {

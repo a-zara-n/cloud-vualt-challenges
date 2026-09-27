@@ -10,7 +10,7 @@ export function createCognitoClient(
 ): CognitoIdentityProviderClient {
   const endpoint = options.endpoint !== undefined
     ? options.endpoint
-    : process.env.AWS_ENDPOINT_URL || process.env.LOCALSTACK_ENDPOINT || undefined;
+    : process.env.AWS_ENDPOINT_URL || process.env.FLOCI_ENDPOINT || undefined;
 
   return new CognitoIdentityProviderClient({
     region: options.region ??

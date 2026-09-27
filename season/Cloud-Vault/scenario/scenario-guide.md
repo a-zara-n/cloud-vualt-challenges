@@ -238,7 +238,7 @@ Stage 4のCloudTrailログをさらに分析すると、**JSTの深夜帯に `ct
 
 ## CloudTrailログの構成
 
-ログファイル: `assets/cloudtrail-logs.json`（427イベント）。Stage 4 配布用には `assets/cloudtrail-logs.zip` を使う。S3/LocalStack では `stage4/cloudtrail-logs.zip` に配置し、参照用として CloudTrail 配信形式の `.json.gz` も `assets/cloudtrail/AWSLogs/123456789012/CloudTrail/ap-northeast-1/2026/02/01/` 配下に置く。
+ログファイル: `assets/cloudtrail-logs.json`（427イベント）。Stage 4 配布用には `assets/cloudtrail-logs.zip` を使う。ローカルの S3 では `stage4/cloudtrail-logs.zip` に配置し、参照用として CloudTrail 配信形式の `.json.gz` も `assets/cloudtrail/AWSLogs/123456789012/CloudTrail/ap-northeast-1/2026/02/01/` 配下に置く。
 
 | 種別 | 件数 | 行為者 | 時間帯(UTC) | IP |
 |------|------|--------|------------|-----|

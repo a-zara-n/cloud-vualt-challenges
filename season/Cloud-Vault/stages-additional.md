@@ -458,7 +458,7 @@ Cognitoのユーザープールでセルフサインアップが有効になっ�
 # USER_POOL_ID: ap-northeast-1_XXXXXXXXX
 # CLIENT_ID: xxxxxxxxxxxxxxxxxxxxxxxxxx
 
-# ローカル環境では Portal の /api/config が LocalStack の実IDを返す
+# ローカル環境では Portal の /api/config が Floci の実IDを返す
 curl http://localhost:3000/api/config | jq '.cognito'
 export USER_POOL_ID=<userPoolId>
 export CLIENT_ID=<clientId>
@@ -476,7 +476,7 @@ aws cognito-idp sign-up \
     Name=custom:role,Value=admin
 # custom:role=admin を自己申告するのがポイント
 
-# ローカル環境で AWS CLI から LocalStack を直接叩く場合
+# ローカル環境で AWS CLI から Floci を直接叩く場合
 aws --endpoint-url http://127.0.0.1:4566 cognito-idp sign-up \
   --client-id $CLIENT_ID \
   --username "$USERNAME" \
@@ -500,7 +500,7 @@ aws cognito-idp initiate-auth \
   --auth-flow USER_PASSWORD_AUTH \
   --auth-parameters USERNAME="$USERNAME",PASSWORD="$PASSWORD"
 
-# ローカル環境で AWS CLI から LocalStack を直接叩く場合
+# ローカル環境で AWS CLI から Floci を直接叩く場合
 aws --endpoint-url http://127.0.0.1:4566 cognito-idp initiate-auth \
   --client-id $CLIENT_ID \
   --auth-flow USER_PASSWORD_AUTH \
@@ -575,7 +575,7 @@ aws ecr get-login-password --region ap-northeast-1 | \
   123456789012.dkr.ecr.ap-northeast-1.amazonaws.com
 
 # ローカル環境
-LOCAL_ECR=000000000000.dkr.ecr.us-east-1.localhost.localstack.cloud:4566
+LOCAL_ECR=000000000000.dkr.ecr.us-east-1.localhost:4566
 aws --endpoint-url http://127.0.0.1:4566 ecr get-login-password --region us-east-1 | \
   docker login --username AWS --password-stdin ${LOCAL_ECR}
 
@@ -924,7 +924,7 @@ aws bedrock-agent get-agent \
   --region ap-northeast-1
 # get-agent / list-agents の metadata だけでは flag は得られない。
 
-# LocalStack は bedrock-agent API 未対応のため、ローカルでは同じ出力を返すモックを使う
+# Floci は bedrock-agent API 未対応のため、ローカルでは同じ出力を返すモックを使う
 bun run bedrock-local -- list-agents
 bun run bedrock-local -- get-agent --agent-id ABCDEF1234
 bun run bedrock-local -- invoke-agent \
@@ -1056,7 +1056,7 @@ aws s3vectors query-vectors \
 #   }]
 # }
 
-# LocalStack は S3 Vectors 未対応のため、ローカルでは seed data を確認する
+# ローカルの検証では S3 Vectors の代わりに seed data を確認する
 jq '.[] | select(.key == "tenant-sakuraretail/users/payment-admin") | .metadata' \
   apps/infra/assets/s3-vectors/customer-vault-documents.json
 ```

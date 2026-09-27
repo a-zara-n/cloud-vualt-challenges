@@ -217,7 +217,7 @@ aws iam get-policy --policy-arn arn:aws:iam::123456789012:policy/PortalDevPolicy
 # }
 
 # ローカル環境では ARN と名前に -local が付く。
-# LocalStack の get-policy は Description を返さない場合があるため、
+# ローカルエミュレーターの get-policy は Description を返さない場合があるため、
 # solver は CDK ソース上の description もフォールバックとして検証する。
 aws --endpoint-url http://127.0.0.1:4566 iam get-policy \
   --policy-arn arn:aws:iam::000000000000:policy/PortalDevPolicy-local
