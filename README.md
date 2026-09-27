@@ -1,6 +1,6 @@
 # Cloud Vault Challenge Server
 
-Cloud Fortress から分離した、CTF「Cloud Vault」の問題サーバーです。参加者がアクセスする TechVault Portal と、問題に必要な AWS リソース、生成アセット、検証用 Solver を含みます。
+Cloud Fortress から分離した、CTF「Cloud Vault」の問題サーバーです。挑戦者がアクセスする TechVault Portal と、問題に必要な AWS リソース、生成アセット、検証用 Solver を含みます。
 
 CDKから構築するBasic認証付きCTFダッシュボードも含みます。全問題の一覧・詳細・ヒント・Flag提出、理解確認の選択式クイズ、ブラウザ内の進捗保存に対応し、ダッシュボードと攻撃対象のTechVault Portalは別々のAPI Gateway（別ドメイン）で公開されます。旧EC2内部サービスは、EC2インスタンスを作らずLambdaエミュレーターで再現します。
 
